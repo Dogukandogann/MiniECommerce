@@ -11,10 +11,10 @@ namespace ECommerceApi.Application.Repositories
     {
         Task<bool> AddAsync(T model);
         Task<bool> AddRangeAsync(List<T> data);
-        bool Remove(string id);
+        Task<bool> RemoveAsync(string id);
         bool Remove(T model);
-        bool RemoveRange(List<T> data);
-        Task<bool> Update(T model);
+        bool RemoveRange(List<T> datas);
+        bool Update(T model);
         Task<int> SaveAsync();
 
 

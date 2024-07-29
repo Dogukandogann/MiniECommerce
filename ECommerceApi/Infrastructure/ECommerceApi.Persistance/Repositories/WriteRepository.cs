@@ -34,9 +34,12 @@ namespace ECommerceApi.Persistance.Repositories
             return true;
         }
 
-        public bool Remove(string id)
+        public async Task<bool> RemoveAsync(string id)
         {
-            throw new NotImplementedException();
+           T model = await  Table.FirstOrDefaultAsync(data=>data.Id.Equals(Guid.Parse(id)));
+            return Remove(model);
+
+
         }
 
         public bool Remove(T model)
@@ -46,14 +49,19 @@ namespace ECommerceApi.Persistance.Repositories
 
         }
 
-        public Task<int> SaveAsync()
+        public bool RemoveRange(List<T> datas)
         {
-            throw new NotImplementedException();
+            Table.RemoveRange(datas);
+            return true;
         }
 
-        public Task<bool> Update(T model)
+        public async Task<int> SaveAsync()
+            => await _context.SaveChangesAsync();
+
+        public bool Update(T model)
         {
-            throw new NotImplementedException();
+            EntityEntry entityEntry = Table.Update(model);
+            return entityEntry.State.Equals(EntityState.Modified);
         }
     }
 }
